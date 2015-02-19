@@ -34,6 +34,9 @@
 		hidePage1();
 		displayPage2();
     }
+    elseif(isset($_POST['selectionMade'])){
+
+    }
     else{
     	hidePage2();
     	hidePage3();
@@ -100,14 +103,33 @@
 		</form>
 	</div>
 	<div id='page2'>
-			<!--Freshman Housing-->
-			<select>
-				<option value="volvo">Volvo</option>
-				<option value="saab">Saab</option>
-				<option value="mercedes">Mercedes</option>
-				<option value="audi">Audi</option>
-			</select>
-
-			</div>
+		<form>
+		<!--Freshman Housing-->
+		<select id='freshman'>
+			<option value="champ">Champ</option>
+			<option value='leo'>Leo</option>
+			<option value="sheahan">Sheahan</option>
+			<option value="marian">Marian</option>
+		</select>
+		<!--sophmore Housing-->
+		<select id='sophmore'>
+			<option value="foy">Foy</option>
+			<option value='uppernew'>Upper New</option>
+			<option value="lowernew">Lower New</option>
+			<option value="gartland">Gartland</option>
+			<option value="midrise">Mid Rise</option>
+		</select>
+		<!--junior or senior Housing-->
+		<select id='juniorsenior'>
+			<option value="lowerwest">Lower West</option>
+			<option value='lowerfulton'>Lower Fulton</option>
+			<option value="midfulton">Mid Fulton</option>
+			<option value="upperwest">Upper West</option>
+			<option value="upperfulton">Upper Fulton</option>
+		</select>
+		
+		<input type="submit" value="Submit" name='selectionMade'>
+		</form>
+	</div>
 	</body>
 </html>
