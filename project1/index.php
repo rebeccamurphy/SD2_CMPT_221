@@ -30,8 +30,36 @@
 		$laundry =  isset($_POST['laundry']) ? $_POST['laundry'] : '';
 		$handicap =  isset($_POST['handicap']) ? $_POST['handicap'] : '';
 		$housingKind = $_POST['housingKind'];
+		$residence = $_POST['residence'];
+
 
 		hidePage1();
+		//TODO Write function to bring you to the confirmatin 2nd
+		//and a separate function to bring you to the go back second page
+		//and a third function to display the information details on both
+		if (($residence=='champ' || $residence =='leo'||$residence=='sheahan' ||$residence=='marian') && $class==1){
+			//Freshman
+			//valid and proceed to next page
+
+		}
+
+		else if (($residence=='midrise' || $residence =='gartland'||$residence=='foy' ||$residence=='uppernew'||$residence=='lowernew') && $class==2){
+			//Sophmore 
+			//valid and proceed to next page
+		}
+		else if (($residence=='lowerfulton' || $residence =='lowerwest'||$residence=='midfulton' ||$residence=='upperwest'||$residence=='upperfulton') && ($class==3 || $class==4 )){
+			if ($residence == 'upperfulton &&' $laundry =='laundry'){
+				//upperfulton does not have laundry on premises so selection is invalid
+				//go back to page one
+			}
+			//Junior Senior
+			//valid and proceed to next page
+		}
+		else{
+			//invalid selection
+			//go back to page one
+		}
+
 		displayPage2();
     }
     elseif(isset($_POST['selectionMade'])){
@@ -70,6 +98,31 @@
 			</select>
 			<br>
 			<br>
+			
+		<div>Residential Life Options List</div>
+		<select name='residence'>
+			<!--Freshman Housing-->
+			<option value="none">None</option>
+			<option value="champ">Champ</option>
+			<option value='leo'>Leo</option>
+			<option value="sheahan">Sheahan</option>
+			<option value="marian">Marian</option>
+		
+		<!--sophmore Housing-->
+		
+			<option value="foy">Foy</option>
+			<option value='uppernew'>Upper New</option>
+			<option value="lowernew">Lower New</option>
+			<option value="gartland">Gartland</option>
+			<option value="midrise">Mid Rise</option>
+		<!--junior or senior Housing-->
+			<option value="lowerwest">Lower West</option>
+			<option value='lowerfulton'>Lower Fulton</option>
+			<option value="midfulton">Mid Fulton</option>
+			<option value="upperwest">Upper West</option>
+			<option value="upperfulton">Upper Fulton</option>
+		</select>
+		<br><br>
 			<label for='class'>Class</label>
 			<select name='class'>
 				<option value="4">Senior</option>
@@ -87,6 +140,7 @@
 			<input type="checkbox" name="laundry" value="laundry">
 			<br>
 			<br>
+			<label for='housingKind'>Kind of Housing?</label>
 			<select name='housingKind'>
 				<option value="apartment">Apartment</option>
 				<option value="townhouse">Townhouse</option>
@@ -94,42 +148,16 @@
 			</select>			
 			<br>
 			<br>
-			<select>
+			<label for='coedOption'>Coed or Non-Coed</label>
+			<select name='coedOption'>
 				<option value="coed">Coed</option>
 				<option value="noncoed">Non-Coed</option>
 			</select>			
-
+			<br><br>
 			<input type="submit" value="Submit" name='submitForm'>
 		</form>
 	</div>
 	<div id='page2'>
-		<form>
-		<!--Freshman Housing-->
-		<select id='freshman'>
-			<option value="champ">Champ</option>
-			<option value='leo'>Leo</option>
-			<option value="sheahan">Sheahan</option>
-			<option value="marian">Marian</option>
-		</select>
-		<!--sophmore Housing-->
-		<select id='sophmore'>
-			<option value="foy">Foy</option>
-			<option value='uppernew'>Upper New</option>
-			<option value="lowernew">Lower New</option>
-			<option value="gartland">Gartland</option>
-			<option value="midrise">Mid Rise</option>
-		</select>
-		<!--junior or senior Housing-->
-		<select id='juniorsenior'>
-			<option value="lowerwest">Lower West</option>
-			<option value='lowerfulton'>Lower Fulton</option>
-			<option value="midfulton">Mid Fulton</option>
-			<option value="upperwest">Upper West</option>
-			<option value="upperfulton">Upper Fulton</option>
-		</select>
-		
-		<input type="submit" value="Submit" name='selectionMade'>
-		</form>
 	</div>
 	</body>
 </html>
