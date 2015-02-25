@@ -7,19 +7,19 @@
  		echo '<style>#page1{display:block!important;}</style>';
  	}
  	function hidePage1(){
- 		echo '<style>#page1{display:none!important;}</style>';
+ 		echo '<style>#page1{display:None!important;}</style>';
  	}
  	function displayPage2(){
  		echo '<style>#page2{display:block!important;}</style>';
  	}
  	function hidePage2(){
- 		echo '<style>#page2{display:none!important;}</style>';
+ 		echo '<style>#page2{display:None!important;}</style>';
  	}
  	function displayPage3(){
  		echo '<style>#page3{display:block!important;}</style>';
  	}
  	function hidePage3(){
- 		echo '<style>#page3{display:none!important;}</style>';
+ 		echo '<style>#page3{display:None!important;}</style>';
  	}
  	$displayConfirm =false;
  	if (isset($_POST['back'])) {
@@ -40,7 +40,7 @@
 		$CWID = $_POST['cwid'];
 		$gender = $_POST['gender'];
 		$class = $_POST['class'];
-		$coed = $_POST['coedOption'];
+		$Coed = $_POST['CoedOption'];
 		$laundry =  isset($_POST['laundry']) ? $_POST['laundry'] : '';
 		$handicap =  isset($_POST['handicap']) ? $_POST['handicap'] : '';
 		$housingKind = $_POST['housingKind'];
@@ -50,7 +50,7 @@
 		$_SESSION['CWID'] = $CWID;
 		$_SESSION['gender'] = $gender;
 		$_SESSION['class'] = $class;
-		$_SESSION['coed'] = $coed;
+		$_SESSION['Coed'] = $Coed;
 		$_SESSION['laundry'] = $laundry;
 		$_SESSION['handicap'] = $handicap;
 		$_SESSION['housingKind'] = $housingKind;
@@ -64,41 +64,36 @@
 		//TODO Write function to bring you to the confirmatin 2nd
 		//and a separate function to bring you to the go back second page
 		//and a third function to display the information details on both
-		if ($coed == 'coed'){
-			//there is no coed housing
+		if ($Coed == 'Coed'){
+			//there is no Coed housing
 			$valid = false;
 		}
-		else if ($housingKind=='apartment'){
-			//there are no apartment dorms on campus
+		else if ($housingKind=='Apartment'){
+			//there are no Apartment Dorms on campus
 			$valid = false;
 		}
-		else if (($residence=='champ' || $residence =='leo'||$residence=='sheahan' ||$residence=='marian') && $class==1){
+		else if (($residence=='Champagnat Hallagnat Hall' || $residence =='Leo Hall'||$residence=='Sheahan Hall' ||$residence=='Marian Hall') && $class==1){
 			//Freshman
 			//valid and proceed to next page
-			if ($housingKind!='dorm')
+			if ($housingKind!='Dorm')
 				$valid = false;
 			else
 				$valid = true;	
 		}
 
-		else if (($residence=='midrise' || $residence =='gartland'||$residence=='foy' ||$residence=='uppernew'||$residence=='lowernew') && $class==2){
+		else if (($residence=='Midrise Hall' || $residence =='Gartland Commons'||$residence=='Foy Townhouses' ||$residence=='New Townhouses') && $class=='Sophmore'){
 			//Sophmore 
-			if (($housingKind=='dorm' && $residence!='midrise') ||($residence=='midrise'&&$housingKind!='dorm'))
+			if (($housingKind=='Dorm' && $residence!='Midrise Hall') ||($residence=='Midrise Hall'&&$housingKind!='Dorm'))
 				$valid=false;
 			else
 				$valid = true;
 		}
-		else if (($residence=='lowerfulton' || $residence =='lowerwest'||$residence=='midfulton' ||$residence=='upperwest'||$residence=='upperfulton'||$residence=='talmadge') && ($class==3 || $class==4 )){
+		else if (($residence=='New Fulton Townhouses' || $residence =='Lower West Cedar St Townhouses ' ||$residence=='Upper West Cedar St Townhouses'||$residence=='Fulton Street Townhouses'||$residence=='Talmadge Court') && ($class=='Junior' || $class=='Senior' )){
 			
 			//Junior Senior
 			//valid and proceed to next page
-			if ($housingKind=='dorm')
+			if ($housingKind=='Dorm')
 				$valid = false;
-			else if ($residence == 'upperfulton' && $laundry =='laundry'){
-				//upperfulton does not have laundry on premises so selection is invalid
-				//go back to page one
-				$valid = false;
-			}
 			else
 				$valid = true;
 		}
@@ -146,35 +141,33 @@
 		<div>Residential Life Options List</div>
 		<select name='residence'>
 			<!--Freshman Housing-->
-			<option value="none">None</option>
-			<option value="champ">Champ</option>
-			<option value='leo'>Leo</option>
-			<option value="sheahan">Sheahan</option>
-			<option value="marian">Marian</option>
+			<option value="None">None</option>
+			<option value="Champagnat Hall">Champagnat Hall</option>
+			<option value='Leo Hall'>Leo Hall</option>
+			<option value="Sheahan Hall">Sheahan Hall</option>
+			<option value="Marian Hall">Marian Hall</option>
 		
-		<!--sophmore Housing-->
+		<!--Sophmore Housing-->
 		
-			<option value="foy">Foy</option>
-			<option value='uppernew'>Upper New</option>
-			<option value="lowernew">Lower New</option>
-			<option value="gartland">Gartland</option>
-			<option value="midrise">Mid Rise</option>
+			<option value="Foy Townhouses">Foy Townhouses</option>
+			<option value='New Townhouses'>New Townhouses</option>
+			<option value="Gartland Commons">Gartland Commons</option>
+			<option value="Midrise Hall">Mid Rise</option>
 		<!--junior or senior Housing-->
-			<option value="lowerwest">Lower West</option>
-			<option value='lowerfulton'>Lower Fulton</option>
-			<option value="midfulton">Mid Fulton</option>
-			<option value="upperwest">Upper West</option>
-			<option value="upperfulton">Upper Fulton</option>
-			<option value="talmadge">Talmadge Court</option>
+			<option value="Lower West Cedar St Townhouses ">Lower West Cedar St Townhouses </option>
+			<option value='New Fulton Townhouses'>New Fulton Townhouses</option>
+			<option value="Upper West Cedar St Townhouses">Upper West Cedar St Townhouses</option>
+			<option value="Fulton Street Townhouses">Fulton Street Townhouses</option>
+			<option value="Talmadge Court">Talmadge Court Court</option>
 
 		</select>
 		<br><br>
 			<label for='class'>Class</label>
 			<select name='class'>
-				<option value="4">Senior</option>
-				<option value="3">Junior</option>
-				<option value="2">Sophmore</option>
-				<option value="1">Freshman</option>
+				<option value="Senior">Senior</option>
+				<option value='Junior'>Junior</option>
+				<option value="Sophmore">Sophmore</option>
+				<option value="Freshman">Freshman</option>
 			</select>
 			<br>
 			<br>
@@ -188,16 +181,16 @@
 			<br>
 			<label for='housingKind'>Kind of Housing?</label>
 			<select name='housingKind'>
-				<option value="apartment">Apartment</option>
-				<option value="townhouse">Townhouse</option>
-				<option value="dorm">Dormitory</option>
+				<option value="Apartment">Apartment</option>
+				<option value="Townhouse">Townhouse</option>
+				<option value="Dorm">Dormitory</option>
 			</select>			
 			<br>
 			<br>
-			<label for='coedOption'>Coed or Non-Coed</label>
-			<select name='coedOption'>
-				<option value="coed">Coed</option>
-				<option value="noncoed">Non-Coed</option>
+			<label for='CoedOption'>Coed or Non-Coed</label>
+			<select name='CoedOption'>
+				<option value="Coed">Coed</option>
+				<option value="NonCoed">Non-Coed</option>
 			</select>			
 			<br><br>
 			<input type="submit" value="Submit" name='submitForm'>
@@ -210,7 +203,7 @@
 			print '<p>CWID: ' .$CWID .'</p>';
 			print '<p>Gender: ' .$gender .'</p>';
 			print '<p>Class: ' .$class .'</p>';
-			print '<p>Coed Option : ' .$coed .'</p>';
+			print '<p>Coed Option : ' .$Coed .'</p>';
 				$laundryOption = ($laundry=='laundry') ? 'Yes' : 'No';
 			print '<p>Laundry on premises:'.$laundryOption .' </p>';
 				$handicapOption = ($handicap=='handicap') ? 'Yes' : 'No';
@@ -225,32 +218,32 @@
 					<input type='submit' value='Go Back' name='back'>
 					</form>";
 			}
-			else if (!$valid && $residence!=='none'){
+			else if (!$valid && $residence!=='None'){
 				//invalid choice
 				echo '<p>Your choice with your preferences was not valid. Click go back to try again.<p>';
 				echo "<form action='index.php' method='post'>
 					<input type='submit' value='Go Back' name='back'>
 					</form>";										
 			}
-			else if (!$valid && $residence=='none') {
+			else if (!$valid && $residence=='None') {
 				//no choice made, so display options
 				switch($class){
-					case 4:
-					case 3:
+					case 'Senior':
+					case 'Junior':
 						if ($laundry =='laundry')
-							$options = array('lowerfulton','lowerwest','midfulton','upperwest','talmadge');
+							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses ','Upper West Cedar St Townhouses','Talmadge Court Court');
 						else
-							$options = array('lowerfulton','lowerwest','midfulton','upperwest','upperfulton','talmadge');
+							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses ','Upper West Cedar St Townhouses','Fulton Street Townhouses','Talmadge Court Court');
 						break;
-					case 2:
-						if ($housingKind!='dorm')
-							$options = array('gartland','foy','uppernew','lowernew');
+					case 'Sophmore':
+						if ($housingKind!='Dorm')
+							$options = array('Gartland Commons','Foy Townhouses','New Townhouses');
 						else
-							$options = array('midrise');
+							$options = array('Midrise Hall');
 						break;
-					case 1:
-						if ($housingKind=='dorm')
-							$options = array('champ','leo','sheahan','marian');
+					case 'Freshman':
+						if ($housingKind=='Dorm')
+							$options = array('Champagnat Hall','Leo Hall','Sheahan Hall','Marian Hall');
 						else
 							$options = null;
 						break;
@@ -291,7 +284,7 @@
 				print '<p>CWID: ' .$_SESSION['CWID'].'</p>';
 				print '<p>Gender: ' .$_SESSION['gender'] .'</p>';
 				print '<p>Class: ' .$_SESSION['class'] .'</p>';
-				print '<p>Coed Option : ' .$_SESSION['coed'] .'</p>';
+				print '<p>Coed Option : ' .$_SESSION['Coed'] .'</p>';
 					$laundryOption = ($_SESSION['laundry']=='laundry') ? 'Yes' : 'No';
 				print '<p>Laundry on premises:'.$laundryOption .' </p>';
 					$handicapOption = ($_SESSION['handicap']=='handicap') ? 'Yes' : 'No';
