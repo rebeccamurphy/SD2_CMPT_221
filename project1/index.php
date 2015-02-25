@@ -2,6 +2,7 @@
 
  <?php
 
+ 	session_start();
  	function displayPage1(){
  		echo '<style>#page1{display:block!important;}</style>';
  	}
@@ -20,49 +21,92 @@
  	function hidePage3(){
  		echo '<style>#page3{display:none!important;}</style>';
  	}
+ 	$displayConfirm =false;
+ 	if (isset($_POST['back'])) {
+	    hidePage2();
+	    displayPage1();
+    }
+    else if (isset($_POST['confirm'])) {
+    	hidePage1();
+	    hidePage2();
+	    $residence = $_POST['options'];
+	    displayPage3();
+	    $displayConfirm = true;
+    }
 
-    if(isset($_POST['submitForm'])) {
+    else if(isset($_POST['submitForm'])) {
     	//page 1 form submitted
 		$name = $_POST["name"];
 		$CWID = $_POST['cwid'];
 		$gender = $_POST['gender'];
 		$class = $_POST['class'];
+		$coed = $_POST['coedOption'];
 		$laundry =  isset($_POST['laundry']) ? $_POST['laundry'] : '';
 		$handicap =  isset($_POST['handicap']) ? $_POST['handicap'] : '';
 		$housingKind = $_POST['housingKind'];
 		$residence = $_POST['residence'];
 
+		$_SESSION['name'] = $name;
+		$_SESSION['CWID'] = $CWID;
+		$_SESSION['gender'] = $gender;
+		$_SESSION['class'] = $class;
+		$_SESSION['coed'] = $coed;
+		$_SESSION['laundry'] = $laundry;
+		$_SESSION['handicap'] = $handicap;
+		$_SESSION['housingKind'] = $housingKind;
 
 		hidePage1();
+		
+		displayPage2();
+
+		
+
 		//TODO Write function to bring you to the confirmatin 2nd
 		//and a separate function to bring you to the go back second page
 		//and a third function to display the information details on both
-		if (($residence=='champ' || $residence =='leo'||$residence=='sheahan' ||$residence=='marian') && $class==1){
+		if ($coed == 'coed'){
+			//there is no coed housing
+			$valid = false;
+		}
+		else if ($housingKind=='apartment'){
+			//there are no apartment dorms on campus
+			$valid = false;
+		}
+		else if (($residence=='champ' || $residence =='leo'||$residence=='sheahan' ||$residence=='marian') && $class==1){
 			//Freshman
 			//valid and proceed to next page
-
+			if ($housingKind!='dorm')
+				$valid = false;
+			else
+				$valid = true;	
 		}
 
 		else if (($residence=='midrise' || $residence =='gartland'||$residence=='foy' ||$residence=='uppernew'||$residence=='lowernew') && $class==2){
 			//Sophmore 
-			//valid and proceed to next page
+			if (($housingKind=='dorm' && $residence!='midrise') ||($residence=='midrise'&&$housingKind!='dorm'))
+				$valid=false;
+			else
+				$valid = true;
 		}
-		else if (($residence=='lowerfulton' || $residence =='lowerwest'||$residence=='midfulton' ||$residence=='upperwest'||$residence=='upperfulton') && ($class==3 || $class==4 )){
-			if ($residence == 'upperfulton &&' $laundry =='laundry'){
-				//upperfulton does not have laundry on premises so selection is invalid
-				//go back to page one
-			}
+		else if (($residence=='lowerfulton' || $residence =='lowerwest'||$residence=='midfulton' ||$residence=='upperwest'||$residence=='upperfulton'||$residence=='talmadge') && ($class==3 || $class==4 )){
+			
 			//Junior Senior
 			//valid and proceed to next page
+			if ($housingKind=='dorm')
+				$valid = false;
+			else if ($residence == 'upperfulton' && $laundry =='laundry'){
+				//upperfulton does not have laundry on premises so selection is invalid
+				//go back to page one
+				$valid = false;
+			}
+			else
+				$valid = true;
 		}
 		else{
 			//invalid selection
 			//go back to page one
+			$valid = false;
 		}
-
-		displayPage2();
-    }
-    elseif(isset($_POST['selectionMade'])){
 
     }
     else{
@@ -121,6 +165,8 @@
 			<option value="midfulton">Mid Fulton</option>
 			<option value="upperwest">Upper West</option>
 			<option value="upperfulton">Upper Fulton</option>
+			<option value="talmadge">Talmadge Court</option>
+
 		</select>
 		<br><br>
 			<label for='class'>Class</label>
@@ -158,6 +204,101 @@
 		</form>
 	</div>
 	<div id='page2'>
+		<?php
+			print '<p>Residence Preference: ' .$residence .'</p>';
+			print '<p>Name: ' .$name .'</p>';
+			print '<p>CWID: ' .$CWID .'</p>';
+			print '<p>Gender: ' .$gender .'</p>';
+			print '<p>Class: ' .$class .'</p>';
+			print '<p>Coed Option : ' .$coed .'</p>';
+				$laundryOption = ($laundry=='laundry') ? 'Yes' : 'No';
+			print '<p>Laundry on premises:'.$laundryOption .' </p>';
+				$handicapOption = ($handicap=='handicap') ? 'Yes' : 'No';
+			print '<p>Handicap Accessible: '.$handicapOption .' </p>';
+			print '<p>Kind of Housing: ' .$housingKind .'</p>';
+	
+			if($valid){
+				//valid choice
+				echo '<p>Your housing choice was valid with your options. Click confirm to go to the confirmation page.</p>';
+				echo "<form action='index.php' method='post'>
+					<input type='submit' value='Confirm' name='confirm'>
+					<input type='submit' value='Go Back' name='back'>
+					</form>";
+			}
+			else if (!$valid && $residence!=='none'){
+				//invalid choice
+				echo '<p>Your choice with your preferences was not valid. Click go back to try again.<p>';
+				echo "<form action='index.php' method='post'>
+					<input type='submit' value='Go Back' name='back'>
+					</form>";										
+			}
+			else if (!$valid && $residence=='none') {
+				//no choice made, so display options
+				switch($class){
+					case 4:
+					case 3:
+						if ($laundry =='laundry')
+							$options = array('lowerfulton','lowerwest','midfulton','upperwest','talmadge');
+						else
+							$options = array('lowerfulton','lowerwest','midfulton','upperwest','upperfulton','talmadge');
+						break;
+					case 2:
+						if ($housingKind!='dorm')
+							$options = array('gartland','foy','uppernew','lowernew');
+						else
+							$options = array('midrise');
+						break;
+					case 1:
+						if ($housingKind=='dorm')
+							$options = array('champ','leo','sheahan','marian');
+						else
+							$options = null;
+						break;
+				}
+				if (is_null($options)){
+					echo '<p> Based on your preferences, you have no options. Please go back and try again.<p>';
+					echo "<form action='index.php' method='post'>
+					<input type='submit' value='Go Back' name='back'>
+					</form>";
+
+				}
+				else{
+					echo '<p> Based on your preferences, you have the following options to choose from:</p>';
+					echo "<form action='index.php' method='post'>";
+					echo "<label for='options'>Options</label>";
+					echo "<select name='options'>";
+					foreach ($options as $value){
+						print "<option value='". $value."'>".$value. "</option>";
+					}
+					echo "</select>";
+					echo "<p>Select Confirm to go to the confirmation page or go back to rechoose.</p>";
+
+					echo "<form action='index.php' method='post'>
+					<input type='submit' value='Confirm' name='confirm'>
+					<input type='submit' value='Go Back' name='back'>
+					</form>";
+				}
+
+			}
+		?>
+	</div>
+	<div id='page3'>
+		<?php
+			if ($displayConfirm){
+				print "<p>Confirmation Page</p>";
+				print '<p>Residence Preference: '. $residence .'</p>';
+				print '<p>Name: ' .$_SESSION['name'].'</p>';
+				print '<p>CWID: ' .$_SESSION['CWID'].'</p>';
+				print '<p>Gender: ' .$_SESSION['gender'] .'</p>';
+				print '<p>Class: ' .$_SESSION['class'] .'</p>';
+				print '<p>Coed Option : ' .$_SESSION['coed'] .'</p>';
+					$laundryOption = ($_SESSION['laundry']=='laundry') ? 'Yes' : 'No';
+				print '<p>Laundry on premises:'.$laundryOption .' </p>';
+					$handicapOption = ($_SESSION['handicap']=='handicap') ? 'Yes' : 'No';
+				print '<p>Handicap Accessible: '.$handicapOption .' </p>';
+				print '<p>Kind of Housing: ' .$_SESSION['housingKind'] .'</p>';
+			}
+		?>
 	</div>
 	</body>
 </html>
