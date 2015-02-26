@@ -1,5 +1,9 @@
-
-
+<!--
+Rebecca Murphy
+2/25/15
+SD2
+Project 1
+-->
  <?php
 
  	session_start();
@@ -29,7 +33,11 @@
     else if (isset($_POST['confirm'])) {
     	hidePage1();
 	    hidePage2();
-	    $residence = $_POST['options'];
+
+	    if (isset($_POST['options'])) {
+	    	$residence = $_POST['options'];
+	    	$_SESSION['residence'] = $residence;
+		}
 	    displayPage3();
 	    $displayConfirm = true;
     }
@@ -56,26 +64,20 @@
 		$_SESSION['housingKind'] = $housingKind;
 
 		hidePage1();
-		
 		displayPage2();
 
-		
-
-		//TODO Write function to bring you to the confirmatin 2nd
-		//and a separate function to bring you to the go back second page
-		//and a third function to display the information details on both
 		if ($Coed == 'Coed'){
 			//there is no Coed housing
-			$valid = false;
+			$invalidPref = true;
 		}
-		else if ($housingKind=='Apartment'){
+		if ($housingKind=='Apartment'){
 			//there are no Apartment Dorms on campus
-			$valid = false;
+			$invalidPref = true;
 		}
-		else if (($residence=='Champagnat Hallagnat Hall' || $residence =='Leo Hall'||$residence=='Sheahan Hall' ||$residence=='Marian Hall') && $class==1){
+		if (($residence=='Champagnat Hall' || $residence =='Leo Hall'||$residence=='Sheahan Hall' ||$residence=='Marian Hall') && $class=='Freshman'){
 			//Freshman
 			//valid and proceed to next page
-			if ($housingKind!='Dorm')
+			if ($housingKind!='Dormitory')
 				$valid = false;
 			else
 				$valid = true;	
@@ -83,7 +85,7 @@
 
 		else if (($residence=='Midrise Hall' || $residence =='Gartland Commons'||$residence=='Foy Townhouses' ||$residence=='New Townhouses') && $class=='Sophmore'){
 			//Sophmore 
-			if (($housingKind=='Dorm' && $residence!='Midrise Hall') ||($residence=='Midrise Hall'&&$housingKind!='Dorm'))
+			if (($housingKind=='Dormitory' && $residence!='Midrise Hall') ||($residence=='Midrise Hall'&&$housingKind!='Dormitory'))
 				$valid=false;
 			else
 				$valid = true;
@@ -92,7 +94,7 @@
 			
 			//Junior Senior
 			//valid and proceed to next page
-			if ($housingKind=='Dorm')
+			if ($housingKind=='Dormitory')
 				$valid = false;
 			else
 				$valid = true;
@@ -131,9 +133,9 @@
 			<br>
 			<label for='gender'>Gender</label>
 			<select name ='gender'>
-				<option value="female">Female</option>
-				<option value="male">Male</option>
-				<option value="other">Other</option>
+				<option value="Female">Female</option>
+				<option value="Male">Male</option>
+				<option value="Other">Other</option>
 			</select>
 			<br>
 			<br>
@@ -183,7 +185,7 @@
 			<select name='housingKind'>
 				<option value="Apartment">Apartment</option>
 				<option value="Townhouse">Townhouse</option>
-				<option value="Dorm">Dormitory</option>
+				<option value="Dormitory">Dormitory</option>
 			</select>			
 			<br>
 			<br>
@@ -211,19 +213,14 @@
 			print '<p>Kind of Housing: ' .$housingKind .'</p>';
 	
 			if($valid){
+
 				//valid choice
+				$_SESSION['residence'] = $residence;
 				echo '<p>Your housing choice was valid with your options. Click confirm to go to the confirmation page.</p>';
 				echo "<form action='index.php' method='post'>
 					<input type='submit' value='Confirm' name='confirm'>
 					<input type='submit' value='Go Back' name='back'>
 					</form>";
-			}
-			else if (!$valid && $residence!=='None'){
-				//invalid choice
-				echo '<p>Your choice with your preferences was not valid. Click go back to try again.<p>';
-				echo "<form action='index.php' method='post'>
-					<input type='submit' value='Go Back' name='back'>
-					</form>";										
 			}
 			else if (!$valid && $residence=='None') {
 				//no choice made, so display options
@@ -236,13 +233,13 @@
 							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses ','Upper West Cedar St Townhouses','Fulton Street Townhouses','Talmadge Court Court');
 						break;
 					case 'Sophmore':
-						if ($housingKind!='Dorm')
+						if ($housingKind!='Dormitory')
 							$options = array('Gartland Commons','Foy Townhouses','New Townhouses');
 						else
 							$options = array('Midrise Hall');
 						break;
 					case 'Freshman':
-						if ($housingKind=='Dorm')
+						if ($housingKind=='Dormitory')
 							$options = array('Champagnat Hall','Leo Hall','Sheahan Hall','Marian Hall');
 						else
 							$options = null;
@@ -273,13 +270,20 @@
 				}
 
 			}
+			else if (!$valid || $invalidPref){
+				//invalid choice
+				echo '<p>Your choice with your preferences was not valid. Click go back to try again.<p>';
+				echo "<form action='index.php' method='post'>
+					<input type='submit' value='Go Back' name='back'>
+					</form>";										
+			}
 		?>
 	</div>
 	<div id='page3'>
 		<?php
 			if ($displayConfirm){
 				print "<p>Confirmation Page</p>";
-				print '<p>Residence Preference: '. $residence .'</p>';
+				print '<p>Residence Preference: '.  $_SESSION['residence'] .'</p>';
 				print '<p>Name: ' .$_SESSION['name'].'</p>';
 				print '<p>CWID: ' .$_SESSION['CWID'].'</p>';
 				print '<p>Gender: ' .$_SESSION['gender'] .'</p>';

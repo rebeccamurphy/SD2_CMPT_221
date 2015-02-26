@@ -10,7 +10,12 @@ Student Status Information (class, gender, special needs, etc.)
 Student Preferences (laundry on premise, apartment/townhouse, co-ed/non-co-ed, etc.)
 
 The second page will take, parse, and display user input from the first page, and will do one of the two options, depending on user input:
-If the user has selected an entry from Residential Life Options, verify whether user submitted information, and preferences are a match with the selection, display the result. A negative result will display an option to go back to the previous page, and a positive result will display an option to go to the next page. 
+
+If the user has selected an entry from Residential Life Options, verify whether user submitted information, and preferences are a match with the selection, display the result. 
+	A negative result will display an option to go back to the previous page, and 
+
+	a positive result will display an option to go to the next page. 
+
 If the user has not made any selection, filter and display relevant Residential Life Options based on their preferences and information. User then should be able to make a selection and move to the third page. 
 
 The last page will take user selection from the second page, and confirm the reservation request with all details (so that the user can save it as a PDF or print it if they wanted to). 
