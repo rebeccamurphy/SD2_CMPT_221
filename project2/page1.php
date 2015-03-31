@@ -4,7 +4,9 @@ Rebecca Murphy
 SD2
 Project 1
 -->
-
+<?php
+session_start();
+?>
 <html>
 	<title>Project 1 </title>
 	<head>

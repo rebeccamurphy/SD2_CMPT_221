@@ -5,6 +5,7 @@ SD2
 Project 1
 -->
 <?php
+	session_start();
 	$residence = $_POST['options'];
 	$_SESSION['residence'] = $residence;
 ?>
