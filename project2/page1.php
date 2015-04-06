@@ -6,6 +6,39 @@ Project 1
 -->
 <?php
 session_start();
+
+// connects to the database
+$servername="localhost";
+$username="root";
+$password="";
+$dbname = "housing_selection";
+
+
+
+$conn = mysql_connect($servername,$username,$password);
+$db_found = mysql_select_db($dbname, $conn);
+
+if(!$conn){
+	die("Connection failed: ".mysqli_connect_error());
+}
+if ($db_found){
+	$sql = "SELECT * FROM residence_areas;";
+	$result = mysql_query($sql);
+
+
+$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+
+$halls = array();
+
+$index = 0;
+while($row = mysql_fetch_assoc($result)) {
+     $halls[$index] = $row;
+     $index++;
+}
+mysql_close($conn);
+}
+
+
 ?>
 <html>
 	<title>Project 1 </title>
@@ -17,12 +50,12 @@ session_start();
 	<body>
 	<div id="page1"> 
 		<form action="page2.php" method='post'>
-			<label for="name">Name</label>
-			<input type="text" name="name">
+			<label for="name" >Name</label>
+			<input type="text" required="required" name="name">
 			<br>
 			<br>
 			<label for="cwid">CWID</label>
-			<input type="text" name="cwid">
+			<input type="text" name="cwid"required="required">
 			<br>
 			<br>
 			<label for='gender'>Gender</label>
@@ -36,25 +69,18 @@ session_start();
 			
 		<div>Residential Life Options List</div>
 		<select name='residence'>
-			<!--Freshman Housing-->
+
+			
 			<option value="None">None</option>
-			<option value="Champagnat Hall">Champagnat Hall</option>
-			<option value='Leo Hall'>Leo Hall</option>
-			<option value="Sheahan Hall">Sheahan Hall</option>
-			<option value="Marian Hall">Marian Hall</option>
-		
-		<!--Sophmore Housing-->
-		
-			<option value="Foy Townhouses">Foy Townhouses</option>
-			<option value='New Townhouses'>New Townhouses</option>
-			<option value="Gartland Commons">Gartland Commons</option>
-			<option value="Midrise Hall">Mid Rise</option>
-		<!--junior or senior Housing-->
-			<option value="Lower West Cedar St Townhouses ">Lower West Cedar St Townhouses </option>
-			<option value='New Fulton Townhouses'>New Fulton Townhouses</option>
-			<option value="Upper West Cedar St Townhouses">Upper West Cedar St Townhouses</option>
-			<option value="Fulton Street Townhouses">Fulton Street Townhouses</option>
-			<option value="Talmadge Court">Talmadge Court Court</option>
+		<?php 
+			foreach ($halls as $hall){
+				if ($hall['slots']>=5){
+					echo "<option value=" .$hall['hall'] .">".$hall['hall']."</option>";
+				}
+				else
+					echo "<option value=" .$hall['hall'] ." disabled>".$hall['hall']."</option>";
+			}
+		?>
 
 		</select>
 		<br><br>

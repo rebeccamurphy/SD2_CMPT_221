@@ -6,6 +6,36 @@ Project 1
 -->
 <?php
 	session_start();
+	// connects to the database
+$servername="localhost";
+$username="root";
+$password="";
+$dbname = "housing_selection";
+
+
+
+$conn = mysql_connect($servername,$username,$password);
+$db_found = mysql_select_db($dbname, $conn);
+
+if(!$conn){
+	die("Connection failed: ".mysqli_connect_error());
+}
+if ($db_found){
+	$sql = "SELECT * FROM residence_areas;";
+	$result = mysql_query($sql);
+
+
+$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+
+$halls = array();
+
+$index = 0;
+while($row = mysql_fetch_assoc($result)) {
+     $halls[$index] = $row;
+     $index++;
+}
+mysql_close($conn);
+}
 		//page 1 form submitted
 		$name = $_POST["name"];
 		$CWID = $_POST['cwid'];
@@ -64,6 +94,8 @@ Project 1
 			//go back to page one
 			$valid = false;
 		}
+
+
 ?>
 
 <html>
@@ -135,7 +167,10 @@ Project 1
 					echo "<label for='options'>Options</label>";
 					echo "<select name='options'>";
 					foreach ($options as $value){
-						print "<option value='". $value."'>".$value. "</option>";
+						if ($halls[$value]['slots']<5)
+							print "<option value='". $value."'>".$value. "</option>";
+						else
+							print "<option value='". $value."' disabled >".$value. "</option>";
 					}
 					echo "</select>";
 					echo "<p>Select Confirm to go to the confirmation page or go back to rechoose.</p>";

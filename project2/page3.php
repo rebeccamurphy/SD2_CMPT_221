@@ -8,6 +8,31 @@ Project 1
 	session_start();
 	$residence = $_POST['options'];
 	$_SESSION['residence'] = $residence;
+
+	// connects to the database
+	$servername="localhost";
+	$username="root";
+	$password="";
+	$dbname = "housing_selection";
+
+
+
+	$conn = mysql_connect($servername,$username,$password);
+	$db_found = mysql_select_db($dbname, $conn);
+
+	if(!$conn){
+		die("Connection failed: ".mysqli_connect_error());
+	}
+	if ($db_found){
+		$sql = "INSERT INTO reservation (name, cwid, gender, class, ra) VALUES ('".$_SESSION['name']."','".$_SESSION['CWID']."','".$_SESSION['gender']."','".$_SESSION['class']."','".$_SESSION['residence']."');";
+		$result = mysql_query($sql);
+
+
+	$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+
+	mysql_close($conn);
+	}
+
 ?>
 <html>
 	<title>Project 1 </title>

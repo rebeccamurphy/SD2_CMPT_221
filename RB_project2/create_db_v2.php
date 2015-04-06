@@ -5,7 +5,7 @@
 $servername="localhost";
 $username="root";
 $password="";
-// $dbname = "housing_selection";
+//$dbname = "housing_selection";
 
 
 
