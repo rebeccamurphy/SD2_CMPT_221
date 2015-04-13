@@ -1,4 +1,7 @@
+
+
 <?php
+
 // connects to the database
 $servername="localhost";
 $username="root";
@@ -7,13 +10,11 @@ $dbname = "housing_selection";
 
 
 
-$conn = mysqli_connect($servername,$username,$password,$dbname);
+$conn = mysql_connect($servername,$username,$password);
+$db_found = mysql_select_db($dbname, $conn);
 
 if(!$conn){
 	die("Connection failed: ".mysqli_connect_error());
 }
-echo "Connected to HOUSING_SELECTION successfully.";
-
-// mysqli_close($conn);
 
 ?>
