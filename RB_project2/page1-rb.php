@@ -39,7 +39,7 @@ mysql_close($conn);
 	</head>
 	<body>
 	<div id="page1"> 
-		<form action="page2.php" method='post'>
+		<form action="page2-rb.php" method='post'>
 			<label for="name" >Name</label>
 			<input type="text" required="required" name="name">
 			<br>
@@ -108,6 +108,8 @@ mysql_close($conn);
 			<input type="submit" value="Submit" name='submitForm'>
 		</form>
 	</div>
-	<?php require_once 'footer.php'; ?>
+	<footer>
+		<p>CMSC 221L  Spring 2015  *** Team #9 - Rebecca Murphy - Richard Brown***</p>
+	</footer>
 	</body>
 </html>

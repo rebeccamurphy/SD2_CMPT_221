@@ -16,11 +16,24 @@ Project 2
 	
 
 	if ($db_found){
+		//save reservation
 		$sql = "INSERT INTO reservation (name, cwid, gender, class, ra) VALUES ('".$_SESSION['name']."','".$_SESSION['CWID']."','".$_SESSION['gender']."','".$_SESSION['class']."','".$_SESSION['residence']."');";
 		$result = mysql_query($sql);
+		$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
+		//get slot numbers of residence
+		$sql = 'SELECT * FROM residence_areas WHERE hall="' .  $_SESSION['residence'].'"' ;
+		$result = mysql_query($sql);
+		$numSlots = mysql_fetch_array($result)['slots'];
+		//--$numSlots;
+		
+		$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+		
+		if (!$numSlots <=0)
+			$sql = 'UPDATE residence_areas SET slots='. --$numSlots. ' WHERE hall="' .$_SESSION['residence'].'"';
 
-	$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+		$result = mysql_query($sql);
+		$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
 	mysql_close($conn);
 	}
@@ -51,6 +64,9 @@ Project 2
 			
 		?>
 	</div>
-	<?php require_once 'footer.php'; ?>
+	<footer>
+		<p>CMSC 221L  Spring 2015  *** Team #9 - Rebecca Murphy - Richard Brown***</p>
+	</footer>
+	
 	</body>
 </html>

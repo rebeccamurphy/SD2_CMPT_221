@@ -114,10 +114,10 @@ mysql_close($conn);
 				//valid choice
 				$_SESSION['residence'] = $residence;
 				echo '<p>Your housing choice was valid with your options. Click confirm to go to the confirmation page.</p>';
-				echo "<form action='page3.php' method='post'>
+				echo "<form action='page3-rb.php' method='post'>
 					<input type='submit' value='Confirm' name='confirm'>
 					</form>";
-				echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1.php''>";
+				echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1-rb.php''>";
 			
 			}
 			else if (!$valid && $residence=='None') {
@@ -145,14 +145,14 @@ mysql_close($conn);
 				}
 				if (is_null($options)){
 					echo '<p> Based on your preferences, you have no options. Please go back and try again.<p>';
-					echo "<form action='page1.php' method='post'>
+					echo "<form action='page1-rb.php' method='post'>
 					<input type='submit' value='Go Back' name='back'>
 					</form>";
 
 				}
 				else{
 					echo '<p> Based on your preferences, you have the following options to choose from:</p>';
-					echo "<form action='page3.php' method='post'>";
+					echo "<form action='page3-rb.php' method='post'>";
 					echo "<label for='options'>Options</label>";
 					echo "<select name='options'>";
 					foreach ($options as $value){
@@ -166,19 +166,22 @@ mysql_close($conn);
 
 					echo "<input type='submit' value='Confirm' name='confirm'>
 					</form>";
-					echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1.php''>";
+					echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1-rb.php''>";
 				}
 
 			}
 			else if (!$valid || $invalidPref){
 				//invalid choice
 				echo '<p>Your choice with your preferences was not valid. Click go back to try again.<p>';
-				echo "<form action='page1.php' method='post'>
+				echo "<form action='page1-rb.php' method='post'>
 					<input type='submit' value='Go Back' name='back'>
 					</form>";										
 			}
 		?>
 	</div>
-	<?php require_once 'footer.php'; ?>
+	<footer>
+		<p>CMSC 221L  Spring 2015  *** Team #9 - Rebecca Murphy - Richard Brown***</p>
+	</footer>
+	
 	</body>
 </html>

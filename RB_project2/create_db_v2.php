@@ -14,15 +14,16 @@ if(!$conn){
 	die("Connection failed: ".mysqli_connect_error());
 }
 
-
+$sql = "DROP DATABASE IF EXISTS HOUSING_SELECTION";
+if (mysqli_query($conn,$sql)) {echo "Previous database removed: ".mysqli_error($conn);}
 
 
 $sql = "CREATE DATABASE housing_selection";
 if (!mysqli_query($conn,$sql)) {echo "Error creating database: ".mysqli_error($conn);} 
 
 
-$sql = "USE housing_selection_test";
-if (!mysqli_query($conn,$sql)) {echo "Error switching to HOUSING_SELECTION_TEST db: ".mysqli_error($conn);} 
+$sql = "USE housing_selection";
+if (!mysqli_query($conn,$sql)) {echo "Error switching to HOUSING_SELECTION db: ".mysqli_error($conn);} 
 
 
 //----------------------------------------------------------------------------------------------------------
