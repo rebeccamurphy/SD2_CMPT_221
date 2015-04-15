@@ -21,8 +21,6 @@ $halls = array();
 while($row = mysql_fetch_assoc($result)) {
      $halls[$row["hall"]] = $row;
 }
-var_dump($halls);
-var_dump($halls["Lower West Cedar St Townhouses"]);
 mysql_close($conn);
 }
 		//page 1 form submitted
