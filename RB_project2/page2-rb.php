@@ -18,11 +18,11 @@ $res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
 $halls = array();
 
-$index = 0;
 while($row = mysql_fetch_assoc($result)) {
-     $halls[$index] = $row;
-     $index++;
+     $halls[$row["hall"]] = $row;
 }
+var_dump($halls);
+var_dump($halls["Lower West Cedar St Townhouses"]);
 mysql_close($conn);
 }
 		//page 1 form submitted
@@ -69,7 +69,7 @@ mysql_close($conn);
 			else
 				$valid = true;
 		}
-		else if (($residence=='New Fulton Townhouses' || $residence =='Lower West Cedar St Townhouses ' ||$residence=='Upper West Cedar St Townhouses'||$residence=='Fulton Street Townhouses'||$residence=='Talmadge Court') && ($class=='Junior' || $class=='Senior' )){
+		else if (($residence=='New Fulton Townhouses' || $residence =='Lower West Cedar St Townhouses' ||$residence=='Upper West Cedar St Townhouses'||$residence=='Fulton Street Townhouses'||$residence=='Talmadge Court') && ($class=='Junior' || $class=='Senior' )){
 			
 			//Junior Senior
 			//valid and proceed to next page
@@ -126,9 +126,9 @@ mysql_close($conn);
 					case 'Senior':
 					case 'Junior':
 						if ($laundry =='laundry')
-							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses ','Upper West Cedar St Townhouses','Talmadge Court Court');
+							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses','Upper West Cedar St Townhouses','Talmadge Court');
 						else
-							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses ','Upper West Cedar St Townhouses','Fulton Street Townhouses','Talmadge Court Court');
+							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses','Upper West Cedar St Townhouses','Fulton St Townhouses','Talmadge Court');
 						break;
 					case 'Sophmore':
 						if ($housingKind!='Dormitory')
