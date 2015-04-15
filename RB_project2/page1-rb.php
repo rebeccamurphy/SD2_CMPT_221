@@ -64,7 +64,7 @@ mysql_close($conn);
 			<option value="None">None</option>
 		<?php 
 			foreach ($halls as $hall){
-				if ($hall['slots']>=5){
+				if ($hall['slots']<=0){
 					echo "<option value=" .$hall['hall'] .">".$hall['hall']."</option>";
 				}
 				else

@@ -156,7 +156,7 @@ mysql_close($conn);
 					echo "<label for='options'>Options</label>";
 					echo "<select name='options'>";
 					foreach ($options as $value){
-						if ($halls[$value]['slots']<5)
+						if ($halls[$value]['slots']>0)
 							print "<option value='". $value."'>".$value. "</option>";
 						else
 							print "<option value='". $value."' disabled >".$value. "</option>";
