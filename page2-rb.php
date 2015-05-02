@@ -1,25 +1,17 @@
 <!--
 Rebecca Murphy
+Richard C Brown
+
+Team Dayzd & Confuzd
 2/25/15
 SD2
-Project 1
+Project 2
 -->
 <?php
-	session_start();
-	// connects to the database
-$servername="localhost";
-$username="root";
-$password="";
-$dbname = "housing_selection";
+session_start();
+require_once 'connect.php';
 
 
-
-$conn = mysql_connect($servername,$username,$password);
-$db_found = mysql_select_db($dbname, $conn);
-
-if(!$conn){
-	die("Connection failed: ".mysqli_connect_error());
-}
 if ($db_found){
 	$sql = "SELECT * FROM residence_areas;";
 	$result = mysql_query($sql);
@@ -29,11 +21,11 @@ $res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
 $halls = array();
 
-$index = 0;
 while($row = mysql_fetch_assoc($result)) {
-     $halls[$index] = $row;
-     $index++;
+     $halls[$row["hall"]] = $row;
 }
+// var_dump($halls);
+// var_dump($halls["Lower West Cedar St Townhouses"]);
 mysql_close($conn);
 }
 		//page 1 form submitted
@@ -80,7 +72,7 @@ mysql_close($conn);
 			else
 				$valid = true;
 		}
-		else if (($residence=='New Fulton Townhouses' || $residence =='Lower West Cedar St Townhouses ' ||$residence=='Upper West Cedar St Townhouses'||$residence=='Fulton Street Townhouses'||$residence=='Talmadge Court') && ($class=='Junior' || $class=='Senior' )){
+		else if (($residence=='New Fulton Townhouses' || $residence =='Lower West Cedar St Townhouses' ||$residence=='Upper West Cedar St Townhouses'||$residence=='Fulton Street Townhouses'||$residence=='Talmadge Court') && ($class=='Junior' || $class=='Senior' )){
 			
 			//Junior Senior
 			//valid and proceed to next page
@@ -99,10 +91,10 @@ mysql_close($conn);
 ?>
 
 <html>
-	<title>Project 1 </title>
+	<title>Project 2 </title>
 	<head>
 		<p>
-			Housing Recommendation Form 
+			<h1> Housing Recommendation Form </h1
 		</p>
 	</head>
 	<body>
@@ -125,10 +117,10 @@ mysql_close($conn);
 				//valid choice
 				$_SESSION['residence'] = $residence;
 				echo '<p>Your housing choice was valid with your options. Click confirm to go to the confirmation page.</p>';
-				echo "<form action='page3.php' method='post'>
+				echo "<form action='page3-rb.php' method='post'>
 					<input type='submit' value='Confirm' name='confirm'>
 					</form>";
-				echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1.php''>";
+				echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1-rb.php''>";
 			
 			}
 			else if (!$valid && $residence=='None') {
@@ -137,9 +129,9 @@ mysql_close($conn);
 					case 'Senior':
 					case 'Junior':
 						if ($laundry =='laundry')
-							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses ','Upper West Cedar St Townhouses','Talmadge Court Court');
+							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses','Upper West Cedar St Townhouses','Talmadge Court');
 						else
-							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses ','Upper West Cedar St Townhouses','Fulton Street Townhouses','Talmadge Court Court');
+							$options = array('New Fulton Townhouses','Lower West Cedar St Townhouses','Upper West Cedar St Townhouses','Fulton St Townhouses','Talmadge Court');
 						break;
 					case 'Sophmore':
 						if ($housingKind!='Dormitory')
@@ -156,18 +148,18 @@ mysql_close($conn);
 				}
 				if (is_null($options)){
 					echo '<p> Based on your preferences, you have no options. Please go back and try again.<p>';
-					echo "<form action='page1.php' method='post'>
+					echo "<form action='page1-rb.php' method='post'>
 					<input type='submit' value='Go Back' name='back'>
 					</form>";
 
 				}
 				else{
 					echo '<p> Based on your preferences, you have the following options to choose from:</p>';
-					echo "<form action='page3.php' method='post'>";
+					echo "<form action='page3-rb.php' method='post'>";
 					echo "<label for='options'>Options</label>";
 					echo "<select name='options'>";
 					foreach ($options as $value){
-						if ($halls[$value]['slots']<5)
+						if ($halls[$value]['slots']>0)
 							print "<option value='". $value."'>".$value. "</option>";
 						else
 							print "<option value='". $value."' disabled >".$value. "</option>";
@@ -177,18 +169,22 @@ mysql_close($conn);
 
 					echo "<input type='submit' value='Confirm' name='confirm'>
 					</form>";
-					echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1.php''>";
+					echo "<input type='submit' value='Go Back' name='back' onClick='document.location.href='page1-rb.php''>";
 				}
 
 			}
 			else if (!$valid || $invalidPref){
 				//invalid choice
 				echo '<p>Your choice with your preferences was not valid. Click go back to try again.<p>';
-				echo "<form action='page1.php' method='post'>
+				echo "<form action='page1-rb.php' method='post'>
 					<input type='submit' value='Go Back' name='back'>
 					</form>";										
 			}
 		?>
 	</div>
+	<footer>
+		<p>CMSC 221L  Spring 2015  *** Team #9 - Rebecca Murphy - Richard Brown***</p>
+	</footer>
+	
 	</body>
 </html>

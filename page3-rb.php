@@ -1,50 +1,60 @@
 <!--
 Rebecca Murphy
+Richard C Brown
+
+Team Dayzd & Confuzd
 2/25/15
 SD2
-Project 1
+Project 2
 -->
 <?php
 	session_start();
 	$residence = $_POST['options'];
 	$_SESSION['residence'] = $residence;
 
-	// connects to the database
-	$servername="localhost";
-	$username="root";
-	$password="";
-	$dbname = "housing_selection";
+	require_once 'connect.php';
+	
 
-
-
-	$conn = mysql_connect($servername,$username,$password);
-	$db_found = mysql_select_db($dbname, $conn);
-
-	if(!$conn){
-		die("Connection failed: ".mysqli_connect_error());
-	}
 	if ($db_found){
+		//save reservation
 		$sql = "INSERT INTO reservation (name, cwid, gender, class, ra) VALUES ('".$_SESSION['name']."','".$_SESSION['CWID']."','".$_SESSION['gender']."','".$_SESSION['class']."','".$_SESSION['residence']."');";
-		$result = mysql_query($sql);
+		$result = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
+		//get reservation number
+		$sql = 'SELECT id FROM reservation WHERE name="' . $_SESSION['name'].'"';
+		$result = mysql_query($sql)or trigger_error(mysql_error()." in ".$sql);;
+		$reservation_num = mysql_fetch_array($result)['id'];
+		
+		
+		//get slot numbers of residence
+		$sql = 'SELECT * FROM residence_areas WHERE hall="' .  $_SESSION['residence'].'"' ;
+		$result = mysql_query($sql)or trigger_error(mysql_error()." in ".$sql);;
+		$numSlots = mysql_fetch_array($result)['slots'];
+		//--$numSlots;
+		
+		if (!$numSlots <=0)
+			$sql = 'UPDATE residence_areas SET slots='. --$numSlots. ' WHERE hall="' .$_SESSION['residence'].'"';
 
-	$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+		$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
 	mysql_close($conn);
 	}
 
 ?>
 <html>
-	<title>Project 1 </title>
+	<title>Project 2 </title>
 	<head>
 		<p>
-			Housing Recommendation Form 
+			<h1> Housing Recommendation Form </h1 
 		</p>
 	</head>
 	<body>
 	<div id='page3'>
 		<?php
 				print "<p>Confirmation Page</p>";
+				
+				print "<p>Reservation Number = $reservation_num</p>";   // Rick's add
+				
 				print '<p>Residence Preference: '.  $_SESSION['residence'] .'</p>';
 				print '<p>Name: ' .$_SESSION['name'].'</p>';
 				print '<p>CWID: ' .$_SESSION['CWID'].'</p>';
@@ -59,5 +69,9 @@ Project 1
 			
 		?>
 	</div>
+	<footer>
+		<p>CMSC 221L  Spring 2015  *** Team #9 - Rebecca Murphy - Richard Brown***</p>
+	</footer>
+	
 	</body>
 </html>

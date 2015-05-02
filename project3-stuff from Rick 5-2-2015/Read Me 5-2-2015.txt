@@ -1,0 +1,38 @@
+Hello Rebecca
+
+Not sure what you have done so far, so I used the latest
+stuff on Github.
+
+Here's what i have done so far:
+
+1. created a new table called "login".  It is simple, has
+columns for userid and password.  There are some dummy entries,
+and an Administrator login (admin, admin).
+
+2. "index.php"
+Modified this page to go to either "login_check.php" or 'signup.php
+If the user clicks "Login" it sets a variable in POST to 'login'; 
+if they click 'Sign Up' it sets a variable in POST to 'newuser'
+
+3. "login.php"
+Modified the form. It asks for a username and password. Then goes
+to "login_check.php" 
+
+4. "signup.php"
+New file.  Has a form for collecting the username, password,
+student's name, CWID, gender, and class.  Clicking the button
+directs flow to "login_check.php"
+
+5. "login_check.php" 
+New file. You get here from either "login.php" or "signup.php"
+
+IF someone logs in (i.e. not a new user):
+takes the username and password and checks it against the entries
+in the "login" table.  IF the username is not valid, prints out
+a message and provides a link to go back to the login page.
+IF the username is valid, takes them to the Reservation page.
+
+IF you are a new user, it adds an entry with the username and password
+into the "login" table in the dB, then takes them to the Reservation page.
+
+So this is as far as i got today.....

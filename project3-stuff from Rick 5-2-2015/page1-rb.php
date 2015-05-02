@@ -1,26 +1,16 @@
 <!--
 Rebecca Murphy
+Richard C Brown
+
+Team Dayzd & Confuzd
 2/25/15
 SD2
-Project 1
+Project 2
 -->
 <?php
 session_start();
+require_once 'connect.php';
 
-// connects to the database
-$servername="localhost";
-$username="root";
-$password="";
-$dbname = "housing_selection";
-
-
-
-$conn = mysql_connect($servername,$username,$password);
-$db_found = mysql_select_db($dbname, $conn);
-
-if(!$conn){
-	die("Connection failed: ".mysqli_connect_error());
-}
 if ($db_found){
 	$sql = "SELECT * FROM residence_areas;";
 	$result = mysql_query($sql);
@@ -41,15 +31,15 @@ mysql_close($conn);
 
 ?>
 <html>
-	<title>Project 1 </title>
+	<title> Project 2 </title>
 	<head>
 		<p>
-			Housing Recommendation Form 
+			<h1> Housing Recommendation Form </h1>
 		</p>
 	</head>
 	<body>
 	<div id="page1"> 
-		<form action="page2.php" method='post'>
+		<form action="page2-rb.php" method='post'>
 			<label for="name" >Name</label>
 			<input type="text" required="required" name="name">
 			<br>
@@ -74,7 +64,7 @@ mysql_close($conn);
 			<option value="None">None</option>
 		<?php 
 			foreach ($halls as $hall){
-				if ($hall['slots']>=5){
+				if ($hall['slots']>0){
 					echo "<option value=" .$hall['hall'] .">".$hall['hall']."</option>";
 				}
 				else
@@ -118,6 +108,8 @@ mysql_close($conn);
 			<input type="submit" value="Submit" name='submitForm'>
 		</form>
 	</div>
-	
+	<footer>
+		<p>CMSC 221L  Spring 2015  *** Team #9 - Rebecca Murphy - Richard Brown***</p>
+	</footer>
 	</body>
 </html>
