@@ -24,20 +24,13 @@ while($row = mysql_fetch_assoc($result)) {
 mysql_close($conn);
 }
 		//page 1 form submitted
-		$name = $_POST["name"];
-		$CWID = $_POST['cwid'];
-		$gender = $_POST['gender'];
-		$class = $_POST['class'];
+		
 		$Coed = $_POST['CoedOption'];
 		$laundry =  isset($_POST['laundry']) ? $_POST['laundry'] : '';
 		$handicap =  isset($_POST['handicap']) ? $_POST['handicap'] : '';
 		$housingKind = $_POST['housingKind'];
 		$residence = $_POST['residence'];
 
-		$_SESSION['name'] = $name;
-		$_SESSION['CWID'] = $CWID;
-		$_SESSION['gender'] = $gender;
-		$_SESSION['class'] = $class;
 		$_SESSION['Coed'] = $Coed;
 		$_SESSION['laundry'] = $laundry;
 		$_SESSION['handicap'] = $handicap;

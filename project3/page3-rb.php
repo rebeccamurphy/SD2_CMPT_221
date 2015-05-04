@@ -16,8 +16,11 @@ Project 2
 	
 
 	if ($db_found){
+		if ($_SESSION["option"] ==="UPDATE"){
+			deleteReservation();
+		}
 		//save reservation
-		$sql = "INSERT INTO reservation (name, cwid, gender, class, ra) VALUES ('".$_SESSION['name']."','".$_SESSION['CWID']."','".$_SESSION['gender']."','".$_SESSION['class']."','".$_SESSION['residence']."');";
+		$sql = "INSERT INTO reservations (username, ra) VALUES ('".$_SESSION['username'] ."','".$_SESSION['residence']."');";
 		$result = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
 		//get slot numbers of residence

@@ -9,10 +9,25 @@ Project 2
 -->
 <?php
 session_start();
-require_once 'connect.php';
+require_once 'db.php';
 //TODO check if the login is valid here on submit
 //If it is, forward the user to their profile
 //else output an error
+if (isset($_POST['username'])) {
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+
+	$validLogin =checkLogin($username, $password);
+	if ($validLogin){
+		$_SESSION["username"] = $username;
+		if (checkKind()==="student")
+			header("Location: reservation.php");
+		else 
+			header("Location: admin.php");
+	}
+	else
+		echo "<b>Invalid Login.</b>";
+}
 ?>
 <html>
 	<title> Project 2 </title>

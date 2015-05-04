@@ -39,24 +39,7 @@ mysql_close($conn);
 	</head>
 	<body>
 	<div id="page1"> 
-		<form action="page2-rb.php" method='post'>
-			<label for="name" >Name</label>
-			<input type="text" required="required" name="name">
-			<br>
-			<br>
-			<label for="cwid">CWID</label>
-			<input type="text" name="cwid"required="required">
-			<br>
-			<br>
-			<label for='gender'>Gender</label>
-			<select name ='gender'>
-				<option value="Female">Female</option>
-				<option value="Male">Male</option>
-				<option value="Other">Other</option>
-			</select>
-			<br>
-			<br>
-			
+		
 		<div>Residential Life Options List</div>
 		<select name='residence'>
 
@@ -74,13 +57,7 @@ mysql_close($conn);
 
 		</select>
 		<br><br>
-			<label for='class'>Class</label>
-			<select name='class'>
-				<option value="Senior">Senior</option>
-				<option value='Junior'>Junior</option>
-				<option value="Sophmore">Sophmore</option>
-				<option value="Freshman">Freshman</option>
-			</select>
+			
 			<br>
 			<br>
 			<label for='handicap'> Handicap Accessible?</label>
