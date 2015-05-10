@@ -1,5 +1,5 @@
 <!--
-reservation.php
+admin.php
 
 Rebecca Murphy
 Richard C Brown
@@ -13,6 +13,7 @@ Project 3
 session_start();
 require_once 'db.php';
 
+/*
 $hasReservation =checkHasReservation();
 
 if (isset($_POST['option'])) {
@@ -32,6 +33,8 @@ if (isset($_POST['option'])) {
 	}
 
 }
+*/
+
 ?>
 <html>
 	<title> Project 3 </title>
@@ -42,20 +45,17 @@ if (isset($_POST['option'])) {
 	</head>
 	<body>
 	<?php echo"<h2>Hello, ".$_SESSION["username"]."</h2>"?>
-	  
-	<form action="reservation.php" method='post'>
-			<select name='option'>
-			<?php 
-				if ($hasReservation)
-					echo '<option value="DELETE">Delete Reservation</option>';
-				else{
-					echo '<option value="CREATE">Create Reservation</option>';
-					echo '<option value="UPDATE">Update Reservation</option>';
-				}
-			?>
-			</select>	
-		<input type="submit" value="Submit" name='submitForm'>
-	</form>	
+	 
+    <p></p>
+	<a href="admin_users.php">INSERT/UPDATE/DELETE Users</a>
+	<p></p>
+	<a href="admin_reservations.php">INSERT/UPDATE/DELETE Reservations</a>
+	<p></p>
+	<a href="admin_res_halls.php">INSERT/UPDATE/DELETE Residence Halls</a>
+	<p></p>
+	<a href="logout.php">Log Out</a>
+	<p></p>	 
+
 			
 	<footer>
 		<p>CMSC 221L  Spring 2015  *** Team #9 - Rebecca Murphy - Richard Brown***</p>

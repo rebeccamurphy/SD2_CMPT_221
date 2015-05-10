@@ -5,16 +5,18 @@ Richard C Brown
 Team Dayzd & Confuzd
 2/25/15
 SD2
-Project 2
+Project 3
 -->
 <?php
 session_start();
 require_once 'connect.php';
+require_once 'db.php';  // ricks little test
 
 if ($db_found){
 	$sql = "SELECT * FROM residence_areas;";
 	$result = mysql_query($sql);
 
+	
 
 $res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 
@@ -25,13 +27,38 @@ while($row = mysql_fetch_assoc($result)) {
      $halls[$index] = $row;
      $index++;
 }
+// Ricks little test
+    $msg = $_SESSION['stuName'];
+    echo "Hello $msg<br>";
+    $msg = $_SESSION["stuCWID"];
+	echo "CWID: $msg<br>";
+	$msg = $_SESSION["stuGender"];
+	echo "Gender: $msg<br>";
+	$msg = $_SESSION["stuClass"];
+	echo "Class: $msg<br>";
+/*
+   //$msg=$_SESSION['stuName'];
+   $msg=checkKind();
+   echo "checkKind =$msg<br>";
+   
+   $username= $_SESSION["username"];
+   /*
+   $sql = "SELECT kind FROM users WHERE username ='".$username."'";
+   echo "The query is: $sql<br>";
+   $result = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+   $row = mysql_fetch_assoc($result);
+   $kind = $row['kind'];
+   echo "Kind: $kind<br>";
+   */
+// end Ricks little test
+
 mysql_close($conn);
 }
 
 
 ?>
 <html>
-	<title> Project 2 </title>
+	<title> Project 3 </title>
 	<head>
 		<p>
 			<h1> Housing Recommendation Form </h1>
@@ -39,29 +66,12 @@ mysql_close($conn);
 	</head>
 	<body>
 	<div id="page1"> 
-		<form action="page2-rb.php" method='post'>
-			<label for="name" >Name</label>
-			<input type="text" required="required" name="name">
-			<br>
-			<br>
-			<label for="cwid">CWID</label>
-			<input type="text" name="cwid"required="required">
-			<br>
-			<br>
-			<label for='gender'>Gender</label>
-			<select name ='gender'>
-				<option value="Female">Female</option>
-				<option value="Male">Male</option>
-				<option value="Other">Other</option>
-			</select>
-			<br>
-			<br>
-			
+		<form action="page2-rb.php" method='post'>      
 		<div>Residential Life Options List</div>
 		<select name='residence'>
 
 			
-			<option value="None">None</option>
+		<option value="None">None</option>
 		<?php 
 			foreach ($halls as $hall){
 				if ($hall['slots']>0){
@@ -74,13 +84,7 @@ mysql_close($conn);
 
 		</select>
 		<br><br>
-			<label for='class'>Class</label>
-			<select name='class'>
-				<option value="Senior">Senior</option>
-				<option value='Junior'>Junior</option>
-				<option value="Sophmore">Sophmore</option>
-				<option value="Freshman">Freshman</option>
-			</select>
+			
 			<br>
 			<br>
 			<label for='handicap'> Handicap Accessible?</label>

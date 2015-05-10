@@ -70,7 +70,10 @@ function deleteReservation(){
 	$username= $_SESSION["username"];
 	$sql = "SELECT * FROM reservations WHERE username ='".$username."'";
 	$result = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
-	incrementRA($result["ra"]);
+	//incrementRA($result["ra"]);
+	$row = mysql_fetch_assoc($result);  // Rick
+	$ra = $row['ra']; // Rick
+	incrementRA($ra);  // Rick
 	$sql = "DELETE FROM reservations WHERE username ='".$username."'";  // fixed by Rick
 	$result = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
 }
@@ -87,5 +90,43 @@ function checkKind(){
     $kind = $row['kind'];
 	return $kind;
 }
+// added by Rick 5/9/2015
+function displayUsers(){
+	echo "User Table Contents<br>";
+	$sql = "SELECT * FROM users";
+	$result = mysql_query($sql);
+	if (mysql_num_rows($result) > 0) {
+       while($row = mysql_fetch_assoc($result)) {
+		   
+		  printf("%-30s<br>",$row["username"]);  // type string
+	      printf("%-8s ",$row["kind"]);        // type string
+		  
+		  /*
+		  $username1 = $row["username"];
+		  $kind1 = $row["kind"];
+	      $password1 = $row["password"];
+	      $name1 = $row["name"];
+	      $CWID1 = $row["CWID"];
+		  $gender1 = $row["gender"];
+	      $class1 = $row["class"]; 
+		 
+	      printf("%-100s ",$row["username"]);  // type string
+	      printf("%-8s ",$row["kind"]);        // type string
+	      printf("%-30s",$row["password"]);    // type string  
+	      printf("%-30s",$row["name"]);        // type string
+	      printf("%-8s",$row["CWID"]);         // type string 
+		  printf("%s",$row["gender"]);
+	      printf("%s",$row["class"]);
+		  echo "<br>";
+		  */
+        }
+    } else {
+        echo "User table is empty";
+      }
+	
+	// $num_rows = mysql_num_rows($result);
+	// echo "The number of users is: $num_rows<br>";
+}
+
 ?>
 

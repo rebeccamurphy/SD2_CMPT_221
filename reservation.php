@@ -1,5 +1,5 @@
 <!--
-reservation.php NO, this is really admin.php
+reservation.php
 
 Rebecca Murphy
 Richard C Brown
@@ -14,6 +14,9 @@ session_start();
 require_once 'db.php';
 
 $hasReservation =checkHasReservation();
+//Rick's little test
+if($hasReservation){echo "".$_SESSION["username"]." you have a reservation<br>";}
+else {echo "".$_SESSION["username"]." you have no reservation<br>";}
 
 if (isset($_POST['option'])) {
 	$option = $_POST['option'];
@@ -21,7 +24,7 @@ if (isset($_POST['option'])) {
 	if ($option ==="DELETE"){
 		deleteReservation();
 		$hasReservation =checkHasReservation();
-		if (!hasReservation())
+		if (!$hasReservation)
 			echo "<b>Deleted Sucessfully</b>";
 		else
 			echo "<b>Delete Failed</b>";
@@ -37,7 +40,7 @@ if (isset($_POST['option'])) {
 	<title> Project 3 </title>
 	<head>
 		<p>
-			<h1>Admin Page</h1>
+			<h1>Reservation Page</h1>
 		</p>
 	</head>
 	<body>
@@ -46,11 +49,13 @@ if (isset($_POST['option'])) {
 	<form action="reservation.php" method='post'>
 			<select name='option'>
 			<?php 
-				if ($hasReservation)
+				if ($hasReservation) {
 					echo '<option value="DELETE">Delete Reservation</option>';
+				    echo '<option value="UPDATE">Update Reservation</option>';  // Rick fixed this
+				}
 				else{
 					echo '<option value="CREATE">Create Reservation</option>';
-					echo '<option value="UPDATE">Update Reservation</option>';
+					// echo '<option value="UPDATE">Update Reservation</option>';
 				}
 			?>
 			</select>	

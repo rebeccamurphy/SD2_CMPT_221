@@ -1,11 +1,8 @@
 <!--
 Rebecca Murphy
-Richard C Brown
-
-Team Dayzd & Confuzd
 2/25/15
 SD2
-Project 2
+Project 3
 -->
 <?php
 session_start();
@@ -15,38 +12,34 @@ require_once 'connect.php';
 if ($db_found){
 	$sql = "SELECT * FROM residence_areas;";
 	$result = mysql_query($sql);
+    $res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
+    $halls = array();
 
-
-$res = mysql_query($sql) or trigger_error(mysql_error()." in ".$sql);
-
-$halls = array();
-
-while($row = mysql_fetch_assoc($result)) {
-     $halls[$row["hall"]] = $row;
-}
-// var_dump($halls);
-// var_dump($halls["Lower West Cedar St Townhouses"]);
-mysql_close($conn);
+    while($row = mysql_fetch_assoc($result)) {
+         $halls[$row["hall"]] = $row;
+    }	
+    mysql_close($conn);
 }
 		//page 1 form submitted
-		$name = $_POST["name"];
-		$CWID = $_POST['cwid'];
-		$gender = $_POST['gender'];
-		$class = $_POST['class'];
+		
 		$Coed = $_POST['CoedOption'];
 		$laundry =  isset($_POST['laundry']) ? $_POST['laundry'] : '';
 		$handicap =  isset($_POST['handicap']) ? $_POST['handicap'] : '';
 		$housingKind = $_POST['housingKind'];
 		$residence = $_POST['residence'];
 
-		$_SESSION['name'] = $name;
-		$_SESSION['CWID'] = $CWID;
-		$_SESSION['gender'] = $gender;
-		$_SESSION['class'] = $class;
 		$_SESSION['Coed'] = $Coed;
 		$_SESSION['laundry'] = $laundry;
 		$_SESSION['handicap'] = $handicap;
 		$_SESSION['housingKind'] = $housingKind;
+		
+		// following code added by Rick
+		// this is the info of the logged in student user out of the 'users' table
+		$name = $_SESSION["stuName"];
+		$CWID = $_SESSION["stuCWID"];
+		$gender = $_SESSION["stuGender"];
+		$class = $_SESSION["stuClass"];
+		// end of code add from Rick
 
 		if ($Coed == 'Coed'){
 			//there is no Coed housing
@@ -91,7 +84,7 @@ mysql_close($conn);
 ?>
 
 <html>
-	<title>Project 2 </title>
+	<title>Project 3 </title>
 	<head>
 		<p>
 			<h1> Housing Recommendation Form </h1

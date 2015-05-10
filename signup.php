@@ -25,6 +25,14 @@ if (isset($_POST['username'])) {
 		if (!$validUserName){
 			$_SESSION["username"] = $username;
 			createUser($username, $password, $name, $CWID, $gender, $class);
+			// Rick added this
+			// now set the SESSION Variables, since we just created a new user
+			$_SESSION["stuName"] = $name;
+			$_SESSION["stuCWID"] = $CWID;
+			$_SESSION["stuGender"] = $gender;
+			$_SESSION["stuClass"] = $class;
+			
+			// end of what Rick added
 			header("Location: reservation.php");
 		}
 		else

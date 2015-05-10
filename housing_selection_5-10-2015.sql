@@ -28,7 +28,7 @@ CREATE TABLE `reservations` (
   `ra` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
-INSERT INTO `reservations` VALUES (7,'spiderman','Leo Hall','2015-05-08 02:52:28');
+INSERT INTO `reservations` VALUES (15,'spiderman','Leo Hall','2015-05-09 15:33:23'),(16,'jimmy.page','New Fulton Townhouses','2015-05-09 17:28:48');
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,7 @@ CREATE TABLE `residence_areas` (
 
 LOCK TABLES `residence_areas` WRITE;
 /*!40000 ALTER TABLE `residence_areas` DISABLE KEYS */;
-INSERT INTO `residence_areas` VALUES ('Leo Hall',3,1),('Champagnat Hall',0,2),('Marian Hall',5,3),('Sheahan Hall',5,4),('Midrise Hall',5,5),('Foy Townhouses',5,6),('Gartland Commons',5,7),('New Townhouses',5,8),('Lower West Cedar St Townhouses',5,9),('Upper West Cedar St Townhouses',5,10),('Fulton St Townhouses',5,11),('Talmadge Court',5,12),('New Fulton Townhouses',5,13);
+INSERT INTO `residence_areas` VALUES ('Leo Hall',4,1),('Champagnat Hall',5,2),('Marian Hall',5,3),('Sheahan Hall',5,4),('Midrise Hall',5,5),('Foy Townhouses',5,6),('Gartland Commons',5,7),('New Townhouses',5,8),('Lower West Cedar St Townhouses',5,9),('Upper West Cedar St Townhouses',5,10),('Fulton St Townhouses',5,11),('Talmadge Court',5,12),('New Fulton Townhouses',4,13);
 /*!40000 ALTER TABLE `residence_areas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,9 +80,8 @@ CREATE TABLE `users` (
   `name` text NOT NULL,
   `CWID` varchar(8) NOT NULL,
   `gender` enum('male','female','other','') NOT NULL,
-  `class` enum('Freshman','Sophomore','Junior','Senior') NOT NULL,
-  PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `class` enum('Freshman','Sophomore','Junior','Senior','') NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +90,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('admin','admin','admin','','','male','Freshman'),('spiderman','student','password','Peter Parker','12345670','male','Freshman');
+INSERT INTO `users` VALUES ('admin','admin','admin','','','',''),('peter.parker','student','password','Peter Parker','12345670','male','Freshman'),('jimmy.page','student','password','Jimmy Page','12345671','male','Senior');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -104,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-07 22:54:47
+-- Dump completed on 2015-05-10  7:39:23
